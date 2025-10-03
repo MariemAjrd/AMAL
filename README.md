@@ -40,3 +40,32 @@ Service Service Service
    Model Instances
 ```
 
+
+**Key Components:**  
+- Centralized API Gateway (single entry point)  
+- Authentication & Authorization service  
+- Chat Completion service  
+- **Fallback Service** ensuring high availability  
+- Load balancing across model instances  
+- Database layer (Redis / MongoDB)  
+
+---
+
+### Proposed Improved Architecture  
+
+The proposed system adopts **parallel microservices** and a distributed gateway cluster:  
+
+```
+Multiple Clients
+        ↓
+API Gateway Cluster
+        ↓
+   Service Mesh
+    /   |   |   |   \
+Auth  Chat Model Fallback Metrics
+ MS    MS   Orch    MS      MS
+        ↓
+Processing Nodes (Parallel)
+        ↓
+   Model Instances
+```
