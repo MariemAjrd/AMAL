@@ -21,6 +21,16 @@ The analysis is fully documented in LaTeX and illustrated with UML diagrams.
 3. **Propose** an improved parallel microservices architecture  
 4. **Document** the migration strategy and expected benefits  
 
+Client Applications
+↓
+Load Balancer
+↓
+API Gateway
+/ |
+Auth Chat Fallback
+Service Service Service
+↓
+Model Instances
 ---
 
 ## 🏗️ Architecture Analysis  
