@@ -20,7 +20,7 @@ The analysis is fully documented in LaTeX and illustrated with UML diagrams.
 2. **Identify** existing limitations and bottlenecks  
 3. **Propose** an improved parallel microservices architecture  
 4. **Document** the migration strategy and expected benefits  
-
+---
 Client Applications
 ↓
 Load Balancer
