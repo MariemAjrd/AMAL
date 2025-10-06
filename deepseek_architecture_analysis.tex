@@ -1,12 +1,12 @@
 \documentclass[12pt,a4paper]{article}
 
-% Packages
+% Packages essentiels
 \usepackage[utf8]{inputenc}
 \usepackage[french]{babel}
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
 \usepackage{tikz}
-\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, shadows.blur}
 \usepackage{geometry}
 \usepackage{hyperref}
 \usepackage{fancyhdr}
@@ -15,270 +15,390 @@
 \usepackage{tcolorbox}
 \usepackage{enumitem}
 \usepackage{caption}
+\usepackage{pagecolor}
+\usepackage{fontawesome5}
 
-% Configuration de la page
+% Palette de couleurs moderne
+\definecolor{primary}{RGB}{13, 110, 253}
+\definecolor{secondary}{RGB}{108, 117, 125}
+\definecolor{success}{RGB}{25, 135, 84}
+\definecolor{danger}{RGB}{220, 53, 69}
+\definecolor{warning}{RGB}{255, 193, 7}
+\definecolor{info}{RGB}{13, 202, 240}
+\definecolor{dark}{RGB}{33, 37, 41}
+\definecolor{light}{RGB}{248, 249, 250}
+\definecolor{accent}{RGB}{111, 66, 193}
+
+% Mise en page
 \geometry{left=2.5cm, right=2.5cm, top=3cm, bottom=3cm}
 
-% Configuration des hyperliens
+% Configuration hyperliens
 \hypersetup{
     colorlinks=true,
-    linkcolor=blue,
-    filecolor=magenta,      
-    urlcolor=cyan,
-    pdftitle={Étude Architecture Gateway DeepSeek},
+    linkcolor=primary,
+    filecolor=accent,      
+    urlcolor=info,
+    pdftitle={Architecture Gateway DeepSeek - Analyse Technique},
 }
 
-% En-têtes et pieds de page
+% En-têtes modernes
 \pagestyle{fancy}
 \fancyhf{}
-\rhead{Étude Gateway DeepSeek}
-\lhead{Document Technique}
-\rfoot{Page \thepage}
+\renewcommand{\headrulewidth}{2pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\rhead{\color{secondary}\textsc{Infrastructure DeepSeek}}
+\lhead{\color{secondary}\textsc{Analyse Technique}}
+\rfoot{\color{secondary}\small Page \thepage}
 
-% Configuration syntaxe code
+% Style code source moderne
 \lstset{
     basicstyle=\ttfamily\small,
     breaklines=true,
     frame=single,
-    backgroundcolor=\color{gray!10}
+    backgroundcolor=\color{light},
+    rulecolor=\color{secondary},
+    commentstyle=\color{success},
+    keywordstyle=\color{primary}\bfseries,
+    stringstyle=\color{danger},
+    numberstyle=\tiny\color{secondary},
+    numbers=left,
+    breakatwhitespace=false,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
 }
 
-% Styles TikZ personnalisés
-\tikzstyle{component} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!20, font=\small]
-\tikzstyle{database} = [cylinder, shape border rotate=90, minimum width=2.5cm, minimum height=1cm, text centered, draw=black, fill=green!20, font=\small]
-\tikzstyle{interface} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!20, font=\small]
-\tikzstyle{cloud} = [ellipse, minimum width=2.5cm, minimum height=1cm, text centered, draw=black, fill=purple!20, font=\small]
-\tikzstyle{arrow} = [thick,->,>=stealth]
+% Styles diagrammes TikZ modernes avec ombres
+\tikzstyle{component} = [rectangle, rounded corners=5pt, minimum width=3cm, minimum height=1cm, text centered, draw=primary, line width=1.5pt, fill=primary!10, font=\small\bfseries, blur shadow={shadow blur steps=5}]
+\tikzstyle{database} = [cylinder, shape border rotate=90, minimum width=2.5cm, minimum height=1cm, text centered, draw=success, line width=1.5pt, fill=success!10, font=\small\bfseries, blur shadow={shadow blur steps=5}]
+\tikzstyle{interface} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=warning, line width=1.5pt, fill=warning!10, font=\small\bfseries, blur shadow={shadow blur steps=5}]
+\tikzstyle{cloud} = [ellipse, minimum width=2.5cm, minimum height=1cm, text centered, draw=accent, line width=1.5pt, fill=accent!10, font=\small\bfseries, blur shadow={shadow blur steps=5}]
+\tikzstyle{arrow} = [line width=1.5pt,->,>=stealth,draw=primary]
 
 \begin{document}
 
-% Couverture
+% Page de titre moderne
 \begin{titlepage}
+    \pagecolor{dark}
+    \color{white}
     \centering
-    \vspace*{2cm}
+    \vspace*{1cm}
     
-    {\Huge\bfseries Étude Approfondie\\[0.5cm] de l'Infrastructure Gateway DeepSeek\par}
+    
+    
+    \vspace{1cm}
+    
+    {\Huge\bfseries\color{info} Architecture et Infrastructure\par}
+    \vspace{0.3cm}
+    
+    {\Huge\bfseries du Gateway API DeepSeek\par}
     \vspace{2cm}
     
-    {\Large Document d'Analyse Technique\par}
+    {\Large\itshape Analyse Technique Détaillée\par}
     \vspace{1.5cm}
     
-    \begin{tcolorbox}[colback=blue!5, colframe=blue!50!black, width=0.8\textwidth, arc=3mm]
+    \begin{tcolorbox}[
+        colback=primary!15, 
+        colframe=info, 
+        width=0.85\textwidth, 
+        arc=8mm,
+        boxrule=2pt,
+        shadow={2mm}{-2mm}{0mm}{black!30}
+    ]
         \centering
-        \textbf{Synopsis}\\[0.3cm]
-        Cette analyse examine en profondeur l'infrastructure du gateway API DeepSeek, détaillant ses éléments architecturaux, ses processus de traitement, ainsi que les techniques d'optimisation employées pour l'exécution de modèles linguistiques massifs.
+        \color{white}
+        \Large\faInfoCircle\ \ \textbf{Résumé Exécutif}\\[0.5cm]
+        \normalsize
+        Ce document présente une analyse détaillée de l'infrastructure gateway de DeepSeek, explorant ses composants architecturaux, ses mécanismes de traitement, et les stratégies d'optimisation mises en œuvre pour le déploiement de modèles de langage à grande échelle.
     \end{tcolorbox}
     
     \vfill
     
-    {\large \today\par}
+    {\large \faCalendar\ \ \today\par}
+    
+    \nopagecolor
 \end{titlepage}
 
-% Sommaire
+\color{dark}
+
+% Table des matières moderne
+\newpage
+\begin{tcolorbox}[
+    colback=primary!5,
+    colframe=primary,
+    title={\Large\faTasks\ \ Table des Matières},
+    fonttitle=\bfseries\color{white},
+    coltitle=white,
+    colbacktitle=primary,
+    enhanced,
+    attach boxed title to top left={yshift=-3mm, xshift=5mm},
+    boxed title style={sharp corners}
+]
 \tableofcontents
-\newpage
-
-% Préambule
-\section{Préambule}
-
-\subsection{Présentation}
-DeepSeek représente une infrastructure d'IA élaborée par une équipe scientifique chinoise, offrant des modèles linguistiques sophistiqués accessibles via interface programmable. La couche gateway constitue l'élément pivot assurant la médiation entre les clients applicatifs et l'infrastructure d'inférence.
-
-\subsection{Finalités du Gateway}
-L'infrastructure gateway DeepSeek poursuit les objectifs suivants :
-\begin{itemize}[noitemsep]
-    \item Proposer un point d'accès standardisé aux capacités DeepSeek
-    \item Superviser les mécanismes d'identification et d'autorisation
-    \item Orchestrer efficacement la répartition des sollicitations
-    \item Garantir la traçabilité complète des transactions
-    \item Maintenir des niveaux élevés de disponibilité et d'extensibilité
-\end{itemize}
-
-\subsection{Fondements Architecturaux des Modèles}
-Les modèles DeepSeek (particulièrement V3 et V3.1) reposent sur une conception novatrice incluant :
-\begin{itemize}[noitemsep]
-    \item \textbf{Architecture MoE} : Conception modulaire avec activation ciblée d'experts spécialisés
-    \item \textbf{MLA} : Système d'attention multi-têtes avec latence réduite
-    \item \textbf{Entraînement FP8} : Approche de précision hybride pour l'apprentissage
-    \item \textbf{Attention Sparse V3.2} : Diminution substantielle des exigences calculatoires
-\end{itemize}
-
-\newpage
-\section{Infrastructure de Sécurité et Supervision}
-
-\subsection{Dispositifs de Protection}
-
-\subsubsection{Authentification Stratifiée}
-\begin{itemize}[leftmargin=2cm]
-    \item \textbf{Clés API} : Identifiants confidentiels personnalisés par utilisateur
-    \item \textbf{Jetons JWT} : Tokens temporisés pour la gestion des sessions
-    \item \textbf{OAuth 2.0} : Prise en charge des protocoles d'autorisation normalisés
-    \item \textbf{mTLS} : Authentification bidirectionnelle pour connexions sensibles
-\end{itemize}
-
-\subsubsection{Garde-fous Contre Abus}
-\begin{tcolorbox}[colback=yellow!10, colframe=orange!60!black]
-    \textbf{Limitation de Débit Hiérarchisée}
-    \begin{itemize}[noitemsep]
-        \item Plafond instantané : 10-100 requêtes/seconde
-        \item Plafond minutaire : 500-5000 requêtes/minute
-        \item Quota quotidien : 10,000-1,000,000 tokens/jour
-        \item Protection IP : Défense anti-DDoS
-    \end{itemize}
 \end{tcolorbox}
 
-\subsubsection{Contrôle et Assainissement}
-\begin{itemize}[noitemsep]
-    \item Vérification rigoureuse des entrées (dimensions, structure, substance)
-    \item Barrières contre injections de prompts hostiles
-    \item Épuration des éléments confidentiels (informations personnelles, données sensibles)
-    \item Identification de schémas d'attaque (contournement, injection)
+\newpage
+
+% Introduction
+\section{ Introduction}
+
+\subsection{Vue d'ensemble}
+DeepSeek constitue une plateforme d'intelligence artificielle développée par une équipe de recherche chinoise, proposant des modèles de langage avancés via une interface programmable. Le gateway représente le composant central orchestrant les interactions entre les applications clientes et le système d'inférence sous-jacent.
+
+\subsection{Objectifs du Gateway}
+Le gateway API DeepSeek remplit plusieurs fonctions critiques :
+\begin{itemize}[leftmargin=*,label={\color{primary}\faCheck}]
+    \item Fournir un point d'entrée unifié pour accéder aux modèles DeepSeek
+    \item Gérer l'authentification et les autorisations des utilisateurs
+    \item Distribuer efficacement les requêtes vers les ressources d'inférence
+    \item Assurer la traçabilité et la journalisation des requêtes
+    \item Maintenir des niveaux élevés de disponibilité et d'évolutivité
 \end{itemize}
 
-\subsection{Supervision et Transparence Opérationnelle}
+\subsection{Architecture des Modèles}
+Les modèles DeepSeek (notamment V3 et V3.1) s'appuient sur des innovations architecturales incluant :
 
-\subsubsection{Indicateurs Captés}
-\begin{table}[h]
-\centering
-\begin{tabular}{|l|l|l|}
-\hline
-\textbf{Domaine} & \textbf{Indicateur} & \textbf{Mesure} \\
-\hline
-Performance & Latence P50/P95/P99 & millisecondes \\
- & Débit & req/seconde \\
- & Durée inférence & millisecondes \\
-\hline
-Ressources & Usage CPU & pourcentage \\
- & Usage GPU & pourcentage \\
- & Mémoire VRAM & gigaoctets \\
- & Bande passante & Mbps \\
-\hline
-Business & Tokens produits & comptage \\
- & Coût unitaire & devise \\
- & Taux d'échec & pourcentage \\
- & Efficacité cache & pourcentage \\
-\hline
-\end{tabular}
-\caption{Indicateurs de Supervision}
-\end{table}
-
-\subsubsection{Suite d'Outils de Monitoring}
-\begin{itemize}[leftmargin=2cm]
-    \item \textbf{Prometheus} : Agrégation et archivage des séries temporelles
-    \item \textbf{Grafana} : Tableaux de bord interactifs temps réel
-    \item \textbf{Jaeger} : Traçage distribué pour suivi des transactions
-    \item \textbf{Stack ELK} : Centralisation et exploration des journaux
-    \item \textbf{AlertManager} : Système de notification automatisé
+\begin{tcolorbox}[
+    enhanced,
+    colback=light,
+    colframe=accent,
+    boxrule=0pt,
+    frame hidden,
+    borderline west={3pt}{0pt}{accent},
+    sharp corners
+]
+\begin{itemize}[leftmargin=*,label={\color{accent}\faCogs}]
+    \item \textbf{Architecture MoE} : Mixture of Experts avec activation sélective d'experts spécialisés
+    \item \textbf{MLA} : Multi-head Latent Attention pour réduire la latence
+    \item \textbf{Entraînement FP8} : Utilisation de précision mixte durant l'apprentissage
+    \item \textbf{Sparse Attention V3.2} : Réduction significative des besoins computationnels
 \end{itemize}
+\end{tcolorbox}
 
 \newpage
-\section{Extensibilité et Résilience}
+\section{\faShieldAlt\ Sécurité et Contrôle d'Accès}
 
-\subsection{Infrastructure Multi-Régionale}
+\subsection{Mécanismes de Sécurité}
+
+\subsubsection{Authentification Multi-niveaux}
+\begin{tcolorbox}[
+    enhanced,
+    colback=success!5,
+    colframe=success,
+    boxrule=0pt,
+    leftrule=4pt,
+    sharp corners
+]
+\begin{itemize}[leftmargin=*,label={\color{success}}]
+    \item \textbf{Clés API} : Identifiants secrets uniques par utilisateur
+    \item \textbf{Tokens JWT} : Jetons temporaires pour la gestion de session
+    \item \textbf{OAuth 2.0} : Support des flux d'autorisation standards
+    \item \textbf{mTLS} : Authentification mutuelle pour connexions critiques
+\end{itemize}
+\end{tcolorbox}
+
+\subsubsection{Protection contre les Abus}
+\begin{tcolorbox}[
+    enhanced,
+    colback=warning!10,
+    colframe=warning,
+    title={\faExclamationTriangle\ \ Limitation de Débit Multi-niveaux},
+    fonttitle=\bfseries,
+    arc=3mm,
+    boxrule=2pt
+]
+\begin{itemize}[leftmargin=*,label={\color{warning}\faBolt}]
+    \item Limite par seconde : 10-100 requêtes/s
+    \item Limite par minute : 500-5000 requêtes/min
+    \item Quota journalier : 10,000-1,000,000 tokens/jour
+    \item Protection IP : Mitigation anti-DDoS
+\end{itemize}
+\end{tcolorbox}
+
+\subsubsection{Validation et Sanitization}
+\begin{itemize}
+    \item Validation stricte des entrées (taille, format, contenu)
+    \item Protection contre les injections de prompts malveillants
+    \item Filtrage des données sensibles (PII, secrets)
+    \item Détection de patterns d'attaque (bypass, injection)
+\end{itemize}
+
+\subsection{Monitoring et Observabilité}
+
+\subsubsection{Métriques Collectées}
+\begin{table}[h]
+\centering
+\begin{tabular}{|>{\columncolor{primary!10}}l|l|l|}
+\hline
+\rowcolor{primary!30}
+\textbf{Catégorie} & \textbf{Métrique} & \textbf{Unité} \\
+\hline
+Performance & Latence P50/P95/P99 & millisecondes \\
+ & Throughput & req/s \\
+ & Temps d'inférence & millisecondes \\
+\hline
+\rowcolor{light}
+Ressources & CPU utilization & pourcentage \\
+ & GPU utilization & pourcentage \\
+ & VRAM usage & gigabytes \\
+ & Network bandwidth & Mbps \\
+\hline
+Business & Tokens générés & count \\
+ & Coût par requête & currency \\
+ & Taux d'erreur & pourcentage \\
+ & Cache hit rate & pourcentage \\
+\hline
+\end{tabular}
+\caption{Métriques de Monitoring}
+\end{table}
+
+\subsubsection{Stack de Monitoring}
+\begin{tcolorbox}[
+    enhanced,
+    colback=info!5,
+    colframe=info,
+    boxrule=0pt,
+    leftrule=4pt,
+    sharp corners
+]
+\begin{itemize}[leftmargin=*,label={\color{info}\faChartLine}]
+    \item \textbf{Prometheus} : Collection et stockage de métriques time-series
+    \item \textbf{Grafana} : Dashboards de visualisation en temps réel
+    \item \textbf{Jaeger} : Traçage distribué des requêtes
+    \item \textbf{ELK Stack} : Agrégation et analyse des logs
+    \item \textbf{AlertManager} : Gestion des alertes et notifications
+\end{itemize}
+\end{tcolorbox}
+
+\newpage
+\section{ Scalabilité et Haute Disponibilité}
+
+\subsection{Déploiement Multi-régions}
 
 \begin{figure}[h]
 \centering
 \begin{tikzpicture}[scale=0.9, every node/.style={scale=0.9}]
     
-    % Répartiteur Global
-    \node[draw, ellipse, minimum width=3.5cm, minimum height=1.2cm, fill=purple!20, thick] (glb) at (6,8) {
-        \textbf{Répartiteur Global}
+    % Load Balancer Global
+    \node[draw, ellipse, minimum width=3.5cm, minimum height=1.2cm, fill=accent!20, line width=2pt, draw=accent, blur shadow={shadow blur steps=5}] (glb) at (6,8) {
+        \textbf{Global Load Balancer}
     };
     
     % Région US-Est
-    \node[draw, rectangle, rounded corners, minimum width=5cm, minimum height=4.5cm, fill=blue!5, thick] (r1) at (0,3) {};
-    \node[anchor=north, font=\large\bfseries] at (r1.north) {Région US-Est};
+    \node[draw, rectangle, rounded corners=8pt, minimum width=5cm, minimum height=4.5cm, fill=primary!5, line width=2pt, draw=primary] (r1) at (0,3) {};
+    \node[anchor=north, font=\large\bfseries\color{primary}] at (r1.north) {\faMapMarkerAlt\ Région US-Est};
     
-    \node[draw, rectangle, rounded corners, minimum width=4cm, minimum height=1cm, fill=blue!30] (gw1) at (0,3.5) {Cluster Gateway};
-    \node[draw, cylinder, shape border rotate=90, minimum width=2.5cm, minimum height=1cm, fill=green!30, aspect=0.3] (cache1) at (0,2) {Cache Redis};
-    \node[draw, rectangle, rounded corners, minimum width=3cm, minimum height=0.8cm, fill=orange!30] (inf1) at (0,0.8) {Pool Inférence};
+    \node[component] (gw1) at (0,3.5) {Gateway Cluster};
+    \node[database] (cache1) at (0,2) {Redis Cache};
+    \node[interface] (inf1) at (0,0.8) {Inference Pool};
     
     % Région EU-Ouest
-    \node[draw, rectangle, rounded corners, minimum width=5cm, minimum height=4.5cm, fill=green!5, thick] (r2) at (12,3) {};
-    \node[anchor=north, font=\large\bfseries] at (r2.north) {Région EU-Ouest};
+    \node[draw, rectangle, rounded corners=8pt, minimum width=5cm, minimum height=4.5cm, fill=success!5, line width=2pt, draw=success] (r2) at (12,3) {};
+    \node[anchor=north, font=\large\bfseries\color{success}] at (r2.north) {\faMapMarkerAlt\ Région EU-Ouest};
     
-    \node[draw, rectangle, rounded corners, minimum width=4cm, minimum height=1cm, fill=blue!30] (gw2) at (12,3.5) {Cluster Gateway};
-    \node[draw, cylinder, shape border rotate=90, minimum width=2.5cm, minimum height=1cm, fill=green!30, aspect=0.3] (cache2) at (12,2) {Cache Redis};
-    \node[draw, rectangle, rounded corners, minimum width=3cm, minimum height=0.8cm, fill=orange!30] (inf2) at (12,0.8) {Pool Inférence};
+    \node[component] (gw2) at (12,3.5) {Gateway Cluster};
+    \node[database] (cache2) at (12,2) {Redis Cache};
+    \node[interface] (inf2) at (12,0.8) {Inference Pool};
     
     % Région Asie-Pacifique
-    \node[draw, rectangle, rounded corners, minimum width=5cm, minimum height=4.5cm, fill=orange!5, thick] (r3) at (6,-2) {};
-    \node[anchor=north, font=\large\bfseries] at (r3.north) {Région Asie-Pacifique};
+    \node[draw, rectangle, rounded corners=8pt, minimum width=5cm, minimum height=4.5cm, fill=warning!5, line width=2pt, draw=warning] (r3) at (6,-2) {};
+    \node[anchor=north, font=\large\bfseries\color{warning}] at (r3.north) {\faMapMarkerAlt\ Région Asie-Pacifique};
     
-    \node[draw, rectangle, rounded corners, minimum width=4cm, minimum height=1cm, fill=blue!30] (gw3) at (6,-1.5) {Cluster Gateway};
-    \node[draw, cylinder, shape border rotate=90, minimum width=2.5cm, minimum height=1cm, fill=green!30, aspect=0.3] (cache3) at (6,-3) {Cache Redis};
-    \node[draw, rectangle, rounded corners, minimum width=3cm, minimum height=0.8cm, fill=orange!30] (inf3) at (6,-4.2) {Pool Inférence};
+    \node[component] (gw3) at (6,-1.5) {Gateway Cluster};
+    \node[database] (cache3) at (6,-3) {Redis Cache};
+    \node[interface] (inf3) at (6,-4.2) {Inference Pool};
     
-    % Stockage Modèles
-    \node[draw, cylinder, shape border rotate=90, minimum width=4cm, minimum height=1.5cm, fill=red!20, aspect=0.25, thick] (storage) at (6,-6.5) {
-        \textbf{Stockage Modèles}\\
+    % Model Storage
+    \node[draw, cylinder, shape border rotate=90, minimum width=4cm, minimum height=1.5cm, fill=danger!20, aspect=0.25, line width=2pt, draw=danger, blur shadow={shadow blur steps=5}] (storage) at (6,-6.5) {
+        \textbf{Model Storage}\\
         \small (S3 / Object Store)
     };
     
     % Connexions
-    \draw[->, very thick, blue!60] (glb) -- (gw1) node[midway, above left, font=\scriptsize] {Route};
-    \draw[->, very thick, blue!60] (glb) -- (gw2) node[midway, above right, font=\scriptsize] {Route};
-    \draw[->, very thick, blue!60] (glb) -- (gw3) node[midway, right, font=\scriptsize] {Route};
+    \draw[arrow, draw=accent] (glb) -- (gw1) node[midway, above left, font=\scriptsize] {Route};
+    \draw[arrow, draw=accent] (glb) -- (gw2) node[midway, above right, font=\scriptsize] {Route};
+    \draw[arrow, draw=accent] (glb) -- (gw3) node[midway, right, font=\scriptsize] {Route};
     
-    \draw[->, thick] (gw1) -- (cache1);
-    \draw[->, thick] (cache1) -- (inf1);
-    \draw[->, thick] (gw2) -- (cache2);
-    \draw[->, thick] (cache2) -- (inf2);
-    \draw[->, thick] (gw3) -- (cache3);
-    \draw[->, thick] (cache3) -- (inf3);
+    \draw[arrow] (gw1) -- (cache1);
+    \draw[arrow] (cache1) -- (inf1);
+    \draw[arrow] (gw2) -- (cache2);
+    \draw[arrow] (cache2) -- (inf2);
+    \draw[arrow] (gw3) -- (cache3);
+    \draw[arrow] (cache3) -- (inf3);
     
-    \draw[->, thick, red!60] (inf1) -- (storage);
-    \draw[->, thick, red!60] (inf2) -- (storage);
-    \draw[->, thick, red!60] (inf3) -- (storage);
+    \draw[arrow, draw=danger] (inf1) -- (storage);
+    \draw[arrow, draw=danger] (inf2) -- (storage);
+    \draw[arrow, draw=danger] (inf3) -- (storage);
     
-    \draw[<->, dashed, thick, green!60] (r1.east) -- (r2.west) node[midway, above, font=\scriptsize] {Sync};
-    \draw[<->, dashed, thick, green!60] (r1.south) -- (r3.north west) node[midway, below left, font=\scriptsize, rotate=30] {Réplication};
-    \draw[<->, dashed, thick, green!60] (r2.south) -- (r3.north east) node[midway, below right, font=\scriptsize, rotate=-30] {Réplication};
+    \draw[<->, dashed, line width=1.5pt, draw=success] (r1.east) -- (r2.west) node[midway, above, font=\scriptsize] {Sync};
+    \draw[<->, dashed, line width=1.5pt, draw=success] (r1.south) -- (r3.north west) node[midway, below left, font=\scriptsize, rotate=30] {Replication};
+    \draw[<->, dashed, line width=1.5pt, draw=success] (r2.south) -- (r3.north east) node[midway, below right, font=\scriptsize, rotate=-30] {Replication};
     
 \end{tikzpicture}
-\caption{Architecture Multi-Régionale}
+\caption{Architecture de Déploiement Multi-régions}
 \label{fig:multi_region}
 \end{figure}
 
-\subsection{Tactiques de Résilience}
+\subsection{Stratégies de Résilience}
 
-\subsubsection{Basculement Automatique}
-\begin{itemize}[noitemsep]
-    \item Contrôles sanitaires toutes les 5-10 secondes
-    \item Détection d'anomalie sous 30 secondes
-    \item Transfert automatique vers infrastructure secondaire
-    \item Tentatives répétées avec délai exponentiel
+\subsubsection{Failover Automatique}
+\begin{itemize}]
+    \item Health checks toutes les 5-10 secondes
+    \item Détection de panne en moins de 30 secondes
+    \item Basculement automatique vers backup
+    \item Retry avec backoff exponentiel
 \end{itemize}
 
-\subsubsection{Modèle Circuit Breaker}
-Protection contre défaillances en cascade :
-\begin{itemize}[noitemsep]
-    \item Mode FERMÉ : Opération standard
-    \item Mode OUVERT : Interruption après seuil d'erreurs (50\% sur 10 requêtes)
-    \item Mode SEMI-OUVERT : Vérification de rétablissement
-    \item Délai d'attente : 30-60 secondes
+\subsubsection{Circuit Breaker}
+\begin{tcolorbox}[
+    enhanced,
+    colback=danger!5,
+    colframe=danger,
+    title={\faPlug\ Protection contre les cascades de pannes},
+    fonttitle=\bfseries\color{white},
+    coltitle=white,
+    colbacktitle=danger,
+    arc=3mm
+]
+\begin{itemize}[leftmargin=*,label={\color{danger}\faCircle}]
+    \item État FERMÉ : Fonctionnement normal
+    \item État OUVERT : Après seuil d'erreurs (50\% sur 10 requêtes)
+    \item État SEMI-OUVERT : Test de récupération
+    \item Timeout : 30-60 secondes
 \end{itemize}
+\end{tcolorbox}
 
-\subsubsection{Dégradation Progressive}
-En situation de surcharge ou défaillance partielle :
-\begin{itemize}[noitemsep]
-    \item Basculement automatique vers modèle allégé
-    \item File d'attente avec système de priorités
-    \item Réponses depuis cache même obsolètes
-    \item Messages d'erreur détaillés avec en-têtes retry-after
+\subsubsection{Graceful Degradation}
+En cas de surcharge ou panne partielle :
+\begin{itemize}[leftmargin=*,label={\color{warning}\faArrowDown}]
+    \item Fallback vers modèle plus léger
+    \item Queue avec prioritisation
+    \item Réponses en cache même si stales
+    \item Messages d'erreur informatifs avec retry-after headers
 \end{itemize}
 
 \newpage
-\section{Interfaces et Points d'Accès}
+\section{ API et Points de Terminaison}
 
-\subsection{Endpoints Essentiels}
+\subsection{Endpoints Principaux}
 
-\begin{tcolorbox}[title=POST /v1/chat/completions, colback=blue!5]
-\textbf{Fonction:} Génération de réponse conversationnelle\\
-\textbf{Format:} application/json\\
-\textbf{Autorisation:} Bearer \{API\_KEY\}
+\begin{tcolorbox}[
+    enhanced,
+    title={\faServer\ POST /v1/chat/completions},
+    colback=primary!5,
+    colframe=primary,
+    fonttitle=\bfseries\ttfamily\color{white},
+    coltitle=white,
+    colbacktitle=primary,
+    boxrule=2pt,
+    arc=5mm
+]
+\textbf{Description:} Génération de complétion conversationnelle\\
+\textbf{Content-Type:} application/json\\
+\textbf{Authorization:} Bearer \{API\_KEY\}
 
-\textbf{Corps:}
+\textbf{Request Body:}
 \begin{lstlisting}[language=json]
 {
   "model": "deepseek-chat",
@@ -292,7 +412,7 @@ En situation de surcharge ou défaillance partielle :
 }
 \end{lstlisting}
 
-\textbf{Réponse:}
+\textbf{Response:}
 \begin{lstlisting}[language=json]
 {
   "id": "chatcmpl-123",
@@ -316,11 +436,23 @@ En situation de surcharge ou défaillance partielle :
 \end{lstlisting}
 \end{tcolorbox}
 
-\begin{tcolorbox}[title=GET /v1/models, colback=green!5]
-\textbf{Fonction:} Énumération des modèles accessibles\\
-\textbf{Autorisation:} Bearer \{API\_KEY\}
+\vspace{0.5cm}
 
-\textbf{Réponse:}
+\begin{tcolorbox}[
+    enhanced,
+    title={\faList\ GET /v1/models},
+    colback=success!5,
+    colframe=success,
+    fonttitle=\bfseries\ttfamily\color{white},
+    coltitle=white,
+    colbacktitle=success,
+    boxrule=2pt,
+    arc=5mm
+]
+\textbf{Description:} Liste des modèles disponibles\\
+\textbf{Authorization:} Bearer \{API\_KEY\}
+
+\textbf{Response:}
 \begin{lstlisting}[language=json]
 {
   "object": "list",
@@ -342,9 +474,9 @@ En situation de surcharge ou défaillance partielle :
 \end{lstlisting}
 \end{tcolorbox}
 
-\subsection{Réponse en Streaming}
+\subsection{Streaming de Réponses}
 
-Pour transmission progressive, le gateway exploite Server-Sent Events (SSE) :
+Pour un retour progressif, le gateway utilise Server-Sent Events (SSE) :
 
 \begin{lstlisting}
 data: {"id":"1","choices":[{"delta":{"content":"Bonjour"}}]}
@@ -357,115 +489,139 @@ data: [DONE]
 \end{lstlisting}
 
 \newpage
-\section{Administration des Modèles}
+\section{ Gestion des Modèles}
 
-\subsection{Catalogue DeepSeek}
+\subsection{Catalogue de Modèles DeepSeek}
 
 \begin{table}[h]
 \centering
 \small
-\begin{tabular}{|l|c|c|l|}
+\begin{tabular}{|>{\columncolor{primary!10}}l|c|c|l|}
 \hline
-\textbf{Modèle} & \textbf{Paramètres} & \textbf{Contexte} & \textbf{Domaine} \\
+\rowcolor{primary!40}
+\textbf{Modèle} & \textbf{Paramètres} & \textbf{Contexte} & \textbf{Spécialisation} \\
 \hline
-deepseek-chat & 671B & 64K & Conversation générale \\
-deepseek-coder & 33B & 16K & Développement logiciel \\
-deepseek-v3 & 671B & 128K & Polyvalent avancé \\
-deepseek-v3.1 & 671B & 128K & Raisonnement optimisé \\
-deepseek-v3.2-exp & 671B & 128K & Version expérimentale \\
+deepseek-chat & 671B & 64K & Usage général \\
+\rowcolor{light}
+deepseek-coder & 33B & 16K & Programmation \\
+deepseek-v3 & 671B & 128K & Multifonction avancé \\
+\rowcolor{light}
+deepseek-v3.1 & 671B & 128K & Raisonnement amélioré \\
+deepseek-v3.2-exp & 671B & 128K & Expérimental \\
 \hline
 \end{tabular}
-\caption{Gamme de Modèles DeepSeek}
+\caption{Portfolio de Modèles DeepSeek}
 \end{table}
 
-\subsection{Versionnement et Déploiement}
+\subsection{Versioning et Déploiement}
 
-\subsubsection{Approche Blue-Green}
-\begin{enumerate}[noitemsep]
-    \item Installation nouvelle version sur environnement "Green"
-    \item Validation sur trafic synthétique (5-10\%)
-    \item Déploiement progressif (10\%, 25\%, 50\%, 100\%)
-    \item Surveillance intensive des indicateurs qualité
-    \item Retour arrière immédiat si anomalies
-    \item Basculement total après validation
+\subsubsection{Stratégie Blue-Green}
+\begin{tcolorbox}[
+    enhanced,
+    colback=info!5,
+    colframe=info,
+    boxrule=0pt,
+    leftrule=4pt,
+    sharp corners
+]
+\begin{enumerate}[leftmargin=*]
+    \item Déploiement nouvelle version sur environnement "Green"
+    \item Tests avec trafic canary (5-10\%)
+    \item Rollout progressif (10\%, 25\%, 50\%, 100\%)
+    \item Monitoring intensif des métriques
+    \item Rollback instantané si dégradation
+    \item Switch complet après validation
 \end{enumerate}
+\end{tcolorbox}
 
-\subsubsection{Registre de Modèles}
-Système centralisé d'administration :
-\begin{itemize}[noitemsep]
-    \item Versionnement sémantique (v3.1.2)
-    \item Métadonnées : dimensions, architecture, date, métriques
-    \item Sommes de contrôle et signatures pour intégrité
-    \item Artefacts : pondérations, tokenizer, paramètres
-    \item Traçabilité : origine et historique
+\subsubsection{Model Registry}
+Système centralisé de gestion :
+\begin{itemize}[leftmargin=*,label={\color{accent}\faDatabase}]
+    \item Versioning sémantique (v3.1.2)
+    \item Métadonnées : taille, architecture, date, performances
+    \item Checksums et signatures pour intégrité
+    \item Artifacts : weights, tokenizer, config
+    \item Lineage : provenance et historique
 \end{itemize}
 
 \newpage
-\section{Scénarios d'Utilisation}
+\section{ Cas d'Usage}
 
-\subsection{Modèle Requête-Réponse Standard}
+\subsection{Pattern Request-Response Standard}
 
 \begin{figure}[h]
 \centering
-\begin{tikzpicture}[node distance=2cm]
-    \tikzstyle{block} = [rectangle, draw, fill=blue!20, text width=3cm, text centered, rounded corners, minimum height=1cm]
+\begin{tikzpicture}[node distance=2.5cm]
+    \tikzstyle{block} = [rectangle, draw, fill=primary!15, text width=3.5cm, text centered, rounded corners=8pt, minimum height=1.2cm, line width=1.5pt, draw=primary, blur shadow={shadow blur steps=5}]
     
-    \node (client) [block] {Application Cliente};
-    \node (gateway) [block, below of=client] {Gateway API};
-    \node (inference) [block, below of=gateway] {Moteur d'Inférence};
+    \node (client) [block] {\faMobileAlt\ Client Application};
+    \node (gateway) [block, below of=client] {\faServer\ API Gateway};
+    \node (inference) [block, below of=gateway] {\faMicrochip\ Inference Engine};
     
-    \draw[->, thick] (client) -- node[right] {Requête} (gateway);
-    \draw[->, thick] (gateway) -- node[right] {Traitement} (inference);
-    \draw[<-, thick] (gateway) -- node[left] {Résultat} (inference);
-    \draw[<-, thick] (client) -- node[left] {Réponse} (gateway);
+    \draw[->, line width=2pt, draw=primary] (client) -- node[right, font=\small] {Request} (gateway);
+    \draw[->, line width=2pt, draw=primary] (gateway) -- node[right, font=\small] {Process} (inference);
+    \draw[<-, line width=2pt, draw=success] (gateway) -- node[left, font=\small] {Result} (inference);
+    \draw[<-, line width=2pt, draw=success] (client) -- node[left, font=\small] {Response} (gateway);
     
 \end{tikzpicture}
-\caption{Schéma Requête-Réponse}
+\caption{Flux Request-Response}
 \end{figure}
 
-\subsection{Modèle Streaming}
+\subsection{Pattern Streaming}
 
-Pour conversations prolongées ou retour progressif :
-\begin{itemize}[noitemsep]
+Pour conversations longues ou feedback progressif :
+\begin{itemize}[leftmargin=*,label={\color{info}\faStream}]
     \item Connexion WebSocket ou SSE maintenue
-    \item Tokens émis progressivement
-    \item Latence perçue diminuée (TTFT - Time To First Token)
-    \item Expérience utilisateur améliorée
+    \item Tokens émis au fur et à mesure
+    \item Latence perçue réduite (TTFT - Time To First Token)
+    \item Meilleure expérience utilisateur
 \end{itemize}
 
-\subsection{Modèle Traitement par Lots}
+\subsection{Pattern Batch Processing}
 
 Pour volumes importants :
-\begin{itemize}[noitemsep]
-    \item Soumission asynchrone de requêtes multiples
-    \item File de traitement avec priorités
-    \item Notification via webhook ou interrogation
-    \item Optimisation coût par regroupement
+\begin{itemize}[leftmargin=*,label={\color{warning}\faLayerGroup}]
+    \item Soumission asynchrone de multiples requêtes
+    \item Queue avec prioritization
+    \item Notification via webhook ou polling
+    \item Optimisation coûts par batching
 \end{itemize}
 
 \newpage
-\section{Aspects Techniques Avancés}
+\section{ Aspects Techniques Avancés}
 
-\subsection{Administration Mémoire GPU}
+\subsection{Gestion Mémoire GPU}
 
-\subsubsection{Stratégies de Gestion}
-\begin{itemize}[leftmargin=2cm]
-    \item \textbf{Fragmentation Modèle} : Répartition sur GPUs multiples
-    \item \textbf{Parallélisme Tensoriel} : Parallélisation opérations matricielles
-    \item \textbf{Parallélisme Pipeline} : Séparation modèle en étapes
-    \item \textbf{Précision Mixte} : Usage FP16/BF16/FP8 selon contexte
+\subsubsection{Techniques de Gestion}
+\begin{tcolorbox}[
+    enhanced,
+    colback=accent!5,
+    colframe=accent,
+    boxrule=0pt,
+    leftrule=4pt,
+    sharp corners
+]
+\begin{itemize}
+    \item \textbf{Model Sharding} : Distribution sur plusieurs GPUs
+    \item \textbf{Tensor Parallelism} : Parallélisation des opérations matricielles
+    \item \textbf{Pipeline Parallelism} : Découpage du modèle en stages
+    \item \textbf{Mixed Precision} : FP16/BF16/FP8 selon contexte
 \end{itemize}
+\end{tcolorbox}
 
 \subsubsection{Optimisation Attention}
-DeepSeek utilise plusieurs approches pour optimiser l'attention :
-\begin{itemize}[noitemsep]
-    \item Multi-head Latent Attention (MLA) : Compression clés-valeurs
-    \item FlashAttention-2 : Optimisation I/O mécanisme attention
-    \item Sparse Attention : Schémas d'attention restreints pour longues séquences
-    \item Grouped Query Attention : Réduction nombre de têtes KV
+DeepSeek utilise plusieurs techniques pour optimiser l'attention :
+\begin{itemize}[leftmargin=*,label={\color{primary}\faBolt}]
+    \item Multi-head Latent Attention (MLA) : Compression des KV
+    \item FlashAttention-2 : Optimisation des I/O mémoire
+    \item Sparse Attention : Patterns d'attention limités pour longues séquences
+    \item Grouped Query Attention : Réduction du nombre de KV heads
 \end{itemize}
 
-\subsection{Topologie Réseau}
+
+
+
+\subsection{Architecture Réseau}
 
 \begin{figure}[h]
 \centering
@@ -475,17 +631,17 @@ DeepSeek utilise plusieurs approches pour optimiser l'attention :
     
     % CDN/Edge
     \node[draw, rectangle, fill=blue!20, minimum width=8cm, minimum height=1.5cm] (cdn) at (0,-2.5) {};
-    \node at (cdn.north) [below] {\textbf{Couche CDN / Edge}};
+    \node at (cdn.north) [below] {\textbf{CDN / Edge Layer}};
     \node[draw, rectangle] (edge1) at (-2.5,-2.5) {Edge 1};
     \node[draw, rectangle] (edge2) at (0,-2.5) {Edge 2};
     \node[draw, rectangle] (edge3) at (2.5,-2.5) {Edge 3};
     
     % Load Balancer
-    \node[draw, trapezium, trapezium left angle=70, trapezium right angle=110, fill=green!20, minimum width=3cm] (lb) at (0,-5) {Répartiteur Charge};
+    \node[draw, trapezium, trapezium left angle=70, trapezium right angle=110, fill=green!20, minimum width=3cm] (lb) at (0,-5) {Load Balancer};
     
     % Gateway Cluster
     \node[draw, rectangle, fill=orange!10, minimum width=10cm, minimum height=2cm] (gwc) at (0,-7.5) {};
-    \node at (gwc.north) [below] {\textbf{Cluster Gateway}};
+    \node at (gwc.north) [below] {\textbf{Gateway Cluster}};
     \node[draw, rectangle] (gw1) at (-3,-7.5) {GW-1};
     \node[draw, rectangle] (gw2) at (-1,-7.5) {GW-2};
     \node[draw, rectangle] (gw3) at (1,-7.5) {GW-3};
@@ -493,7 +649,7 @@ DeepSeek utilise plusieurs approches pour optimiser l'attention :
     
     % Backend Services
     \node[draw, rectangle, fill=red!10, minimum width=10cm, minimum height=2cm] (backend) at (0,-10.5) {};
-    \node at (backend.north) [below] {\textbf{Infrastructure Inférence}};
+    \node at (backend.north) [below] {\textbf{Inference Backend}};
     \node[draw, rectangle] (be1) at (-3,-10.5) {Inf-1};
     \node[draw, rectangle] (be2) at (-1,-10.5) {Inf-2};
     \node[draw, rectangle] (be3) at (1,-10.5) {Inf-3};
@@ -506,43 +662,43 @@ DeepSeek utilise plusieurs approches pour optimiser l'attention :
     \draw[->, thick] (gwc) -- (backend);
     
 \end{tikzpicture}
-\caption{Topologie Réseau}
+\caption{Topologie Réseau Globale}
 \end{figure}
 
-\subsection{Protocoles Communication}
+\subsection{Protocoles de Communication}
 
 \begin{itemize}[leftmargin=2cm]
-    \item \textbf{Frontend $\rightarrow$ Gateway} : HTTPS/2, WebSocket
-    \item \textbf{Gateway $\rightarrow$ Services} : gRPC avec Protobuf
+    \item \textbf{Client $\rightarrow$ Gateway} : HTTPS/2, WebSocket
+    \item \textbf{Gateway $\rightarrow$ Services} : gRPC avec Protocol Buffers
     \item \textbf{Inter-Services} : gRPC ou HTTP/2 avec mTLS
-    \item \textbf{Gateway $\rightarrow$ Cache} : Protocole Redis (RESP)
-    \item \textbf{Gateway $\rightarrow$ Base de données} : Protocole PostgreSQL
+    \item \textbf{Gateway $\rightarrow$ Cache} : Redis Protocol (RESP)
+    \item \textbf{Gateway $\rightarrow$ Database} : PostgreSQL Protocol
 \end{itemize}
 
 \newpage
 \section{Défis et Solutions}
 
-\subsection{Défis Techniques Majeurs}
+\subsection{Challenges Techniques Majeurs}
 
 \begin{table}[h]
 \centering
 \small
 \begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
 \hline
-\textbf{Challenge} & \textbf{Conséquence} & \textbf{Approche} \\
+\textbf{Challenge} & \textbf{Impact} & \textbf{Solution} \\
 \hline
-Latence d'inférence & Expérience utilisateur altérée & Batching, cache, modèles quantifiés \\
+Latence d'inférence & Expérience utilisateur dégradée & Batching, caching, quantization \\
 \hline
-Coût GPU substantiel & Extensibilité contrainte & MoE, quantization, autoscaling \\
+Coût GPU élevé & Scalabilité limitée & MoE, quantization, autoscaling \\
 \hline
-Longueur contexte & Limitation documents longs & Sparse attention, découpage intelligent \\
+Longueur de contexte & Limitation documents longs & Sparse attention, chunking \\
 \hline
-Démarrage à froid & Latence initiale élevée & Préchauffage modèle, pools pré-chargés \\
+Cold start & Latence initiale élevée & Model warming, keep-alive pools \\
 \hline
-Rate limiting & Blocage utilisateurs légitimes & Quotas adaptatifs, mise en file \\
+Rate limiting & Blocage utilisateurs légitimes & Quotas adaptatifs, queueing \\
 \hline
 \end{tabular}
-\caption{Challenges et Approches}
+\caption{Challenges et Solutions}
 \end{table}
 
 \subsection{Optimisations Futures}
@@ -550,43 +706,43 @@ Rate limiting & Blocage utilisateurs légitimes & Quotas adaptatifs, mise en fil
 \subsubsection{Technologies Émergentes}
 \begin{itemize}[noitemsep]
     \item \textbf{Speculative Decoding} : Génération parallèle avec vérification
-    \item \textbf{Distillation Modèle} : Modèles compacts pour cas simples
-    \item \textbf{Neural Architecture Search} : Optimisation automatique architecture
-    \item \textbf{Accélération Hardware} : ASICs dédiés inférence LLM
+    \item \textbf{Model Distillation} : Modèles compacts pour cas simples
+    \item \textbf{Neural Architecture Search} : Optimisation automatique
+    \item \textbf{Hardware Acceleration} : ASICs dédiés LLM inference
 \end{itemize}
 
-\subsubsection{Améliorations Prévues}
+\subsubsection{Roadmap d'Améliorations}
 \begin{itemize}[noitemsep]
-    \item Support requêtes multimodales (texte + visuels)
-    \item Appel de fonctions et usage d'outils natifs
-    \item Fine-tuning à la demande via gateway
+    \item Support multimodal (texte + images)
+    \item Function calling et tool use natifs
+    \item Fine-tuning on-demand via API
     \item Personnalisation utilisateur avec LoRA
 \end{itemize}
 
 \newpage
-\section{Indicateurs de Performance}
+\section{Métriques de Performance}
 
-\subsection{Références de Performance}
+\subsection{Benchmarks de Performance}
 
 \begin{table}[h]
 \centering
 \begin{tabular}{|l|c|c|c|}
 \hline
-\textbf{Indicateur} & \textbf{Objectif} & \textbf{Moyenne} & \textbf{P99} \\
+\textbf{Métrique} & \textbf{Target} & \textbf{Moyenne} & \textbf{P99} \\
 \hline
-Latence Globale & < 500ms & 320ms & 850ms \\
+Latence End-to-End & < 500ms & 320ms & 850ms \\
 TTFT (Time to First Token) & < 200ms & 145ms & 380ms \\
-Débit & > 1000 req/s & 1250 req/s & - \\
+Throughput & > 1000 req/s & 1250 req/s & - \\
 Tokens/seconde & > 50 & 68 & - \\
-Disponibilité & > 99.9\% & 99.95\% & - \\
-Taux d'échec & < 0.1\% & 0.05\% & - \\
-Efficacité Cache & > 30\% & 42\% & - \\
+Availability & > 99.9\% & 99.95\% & - \\
+Error Rate & < 0.1\% & 0.05\% & - \\
+Cache Hit Rate & > 30\% & 42\% & - \\
 \hline
 \end{tabular}
-\caption{Indicateurs Performance Standards}
+\caption{Métriques de Performance Standards}
 \end{table}
 
-\subsection{Profil de Charge Typique}
+\subsection{Profil de Charge}
 
 \begin{figure}[h]
 \centering
@@ -594,7 +750,7 @@ Efficacité Cache & > 30\% & 42\% & - \\
     \begin{axis}[
         width=12cm,
         height=6cm,
-        xlabel={Heure journée},
+        xlabel={Heure de la journée},
         ylabel={Requêtes/seconde},
         xmin=0, xmax=24,
         ymin=0, ymax=1500,
@@ -610,113 +766,274 @@ Efficacité Cache & > 30\% & 42\% & - \\
     \legend{Trafic Gateway}
     \end{axis}
 \end{tikzpicture}
-\caption{Profil de Charge Journalier}
+\caption{Profil de Charge Journalier Typique}
 \end{figure}
 
 \newpage
-\section{Synthèse et Conclusions}
+\section{Conclusions et Perspectives}
 
-\subsection{Points Clés}
+\subsection{Points Clés de l'Architecture}
 
-L'infrastructure gateway DeepSeek constitue une plateforme sophistiquée et rigoureusement optimisée pour la distribution de modèles linguistiques avancés. Les piliers architecturaux comprennent :
+L'infrastructure gateway DeepSeek représente une plateforme sophistiquée et hautement optimisée pour servir des modèles de langage à grande échelle. Les éléments fondamentaux incluent :
 
 \begin{itemize}[leftmargin=2cm]
-    \item \textbf{Extensibilité Horizontale} : Infrastructure distribuée multi-sites
-    \item \textbf{Performance Maximale} : Cache multi-niveaux, batching, quantization
-    \item \textbf{Disponibilité Élevée} : Basculement automatique, disjoncteurs
-    \item \textbf{Sécurité Renforcée} : Authentification multi-facteurs, limitation débit
-    \item \textbf{Transparence Totale} : Monitoring, journalisation, traçage distribué
+    \item \textbf{Scalabilité Horizontale} : Architecture distribuée multi-régions
+    \item \textbf{Performance Optimale} : Cache multi-niveaux, batching, quantization
+    \item \textbf{Haute Disponibilité} : Failover automatique, circuit breakers
+    \item \textbf{Sécurité Robuste} : Authentification multi-niveaux, rate limiting
+    \item \textbf{Observabilité Complète} : Monitoring, logging, distributed tracing
 \end{itemize}
 
-\subsection{Innovation Architecturale DeepSeek}
+\subsection{Innovations Architecturales DeepSeek}
 
-L'architecture Mixture of Experts (MoE) de DeepSeek procure des bénéfices notables :
+L'architecture Mixture of Experts (MoE) de DeepSeek offre des avantages significatifs :
 
 \begin{enumerate}[noitemsep]
-    \item Diminution des exigences calculatoires par activation ciblée
-    \item Extensibilité modulaire du nombre d'experts
+    \item Réduction des besoins computationnels via activation sélective
+    \item Scalabilité via ajout d'experts spécialisés
     \item Spécialisation des experts par domaine
-    \item Efficience énergétique optimisée
+    \item Efficience énergétique améliorée
 \end{enumerate}
 
-\subsection{Axes d'Évolution}
+\subsection{Évolutions Futures}
 
-L'infrastructure gateway continuera son évolution pour intégrer :
+L'infrastructure gateway continuera d'évoluer pour incorporer :
 \begin{itemize}[noitemsep]
-    \item Support de modalités supplémentaires (vision, audio)
-    \item Optimisations matérielles spécifiques
-    \item Intelligence de routage par apprentissage
-    \item Personnalisation avancée utilisateur
-    \item Réduction continue latence et coûts
+    \item Support de modalités additionnelles (vision, audio)
+    \item Optimisations hardware spécifiques
+    \item Intelligence de routage via ML
+    \item Personnalisation avancée par utilisateur
+    \item Réduction continue de la latence et des coûts
 \end{itemize}
 
-\subsection{Préconisations}
+\subsection{Recommandations}
 
-Pour une mise en œuvre réussie d'une infrastructure similaire :
+Pour une implémentation réussie d'une infrastructure similaire :
 
 \begin{tcolorbox}[colback=green!5, colframe=green!50!black]
-\textbf{Pratiques Recommandées}
+\textbf{Best Practices}
 \begin{enumerate}[noitemsep]
-    \item Prioriser l'observabilité dès la conception initiale
-    \item Implémenter des mécanismes de dégradation élégante
-    \item Optimiser le cache de façon agressive
-    \item Automatiser les tests de charge et basculement
-    \item Maintenir une documentation technique actualisée
-    \item Investir dans le monitoring anticipatif
-    \item Planifier l'extensibilité dès l'origine
+    \item Prioriser l'observabilité dès la conception
+    \item Implémenter graceful degradation
+    \item Optimiser agressivement le caching
+    \item Automatiser les tests de charge et failover
+    \item Maintenir une documentation technique à jour
+    \item Investir dans le monitoring prédictif
+    \item Planifier la scalabilité dès le départ
 \end{enumerate}
 \end{tcolorbox}
 
 \newpage
-\section{Sources et Références}
+\section{Références}
 
 \subsection{Documentation Technique}
 
 \begin{itemize}[leftmargin=2cm]
     \item Documentation Officielle DeepSeek: \url{https://platform.deepseek.com/docs}
-    \item Rapport Technique DeepSeek-V3 (arXiv:2412.19437)
-    \item Notes de Version DeepSeek-V3.1
-    \item Spécification Compatibilité API OpenAI
+    \item DeepSeek-V3 Technical Report (arXiv:2412.19437)
+    \item DeepSeek-V3.1 Release Notes
+    \item OpenAI API Compatibility Specification
 \end{itemize}
 
-\subsection{Technologies Employées}
+\subsection{Technologies Utilisées}
 
 \begin{itemize}[leftmargin=2cm]
-    \item vLLM: Framework High-Throughput pour Serving LLM
-    \item Redis: Système de Stockage En Mémoire
-    \item Prometheus \& Grafana: Suite Monitoring
-    \item gRPC: Framework RPC Haute Performance
-    \item Kubernetes: Orchestration Conteneurs
-    \item NGINX: Répartiteur Charge \& Proxy Inverse
+    \item vLLM: High-Throughput LLM Serving Framework
+    \item Redis: In-Memory Data Store
+    \item Prometheus \& Grafana: Monitoring Stack
+    \item gRPC: High-Performance RPC Framework
+    \item Kubernetes: Container Orchestration
+    \item NGINX: Load Balancer \& Reverse Proxy
 \end{itemize}
 
 \subsection{Publications et Ressources}
 
 \begin{itemize}[leftmargin=2cm]
-    \item "Mixture of Experts pour Large Language Models" - Articles Recherche
-    \item "Optimisation Inférence LLM à Grande Échelle" - Blogs Techniques
-    \item "Patterns API Gateway pour Microservices" - Guides Architecture
-    \item "Techniques Optimisation Mémoire GPU" - Documentation NVIDIA
+    \item "Mixture of Experts for Large Language Models" - Research Papers
+    \item "Optimizing LLM Inference at Scale" - Tech Blogs
+    \item "API Gateway Patterns for Microservices" - Architecture Guides
+    \item "GPU Memory Optimization Techniques" - NVIDIA Documentation
 \end{itemize}
 
 \newpage
 \appendix
-\section{Lexique Technique}
+\section{Glossaire Technique}
 
 \begin{description}[leftmargin=3cm, style=nextline]
-    \item[API Gateway] Point d'entrée unifié pour accès aux services backend
-    \item[Batching] Agrégation de requêtes multiples pour traitement simultané
-    \item[Circuit Breaker] Pattern résilience évitant cascades de défaillances
-    \item[Failover] Basculement automatique vers infrastructure secours
-    \item[KV Cache] Cache clés-valeurs dans mécanisme d'attention
-    \item[Load Balancer] Distributeur de charge entre serveurs
-    \item[MoE] Mixture of Experts - Architecture modulaire experts spécialisés
-    \item[Quantization] Réduction précision numérique pour économie mémoire
-    \item[Rate Limiting] Limitation nombre requêtes par période
-    \item[Tokenization] Conversion texte en unités traitables par modèle
+    \item[API Gateway] Point d'entrée unifié pour l'accès aux services backend
+    \item[Batching] Regroupement de plusieurs requêtes pour traitement simultané
+    \item[Circuit Breaker] Pattern de résilience évitant les cascades de pannes
+    \item[Failover] Basculement automatique vers infrastructure de secours
+    \item[KV Cache] Cache clés-valeurs dans le mécanisme d'attention
+    \item[Load Balancer] Répartiteur de charge entre serveurs
+    \item[MoE] Mixture of Experts - Architecture à experts spécialisés
+    \item[Quantization] Réduction de précision numérique pour économie mémoire
+    \item[Rate Limiting] Limitation du nombre de requêtes par période
+    \item[Tokenization] Conversion du texte en unités traitables par le modèle
     \item[TTFT] Time To First Token - Latence avant premier token généré
-    \item[vLLM] Framework optimisé pour inférence LLM
+    \item[vLLM] Framework optimisé pour l'inférence de LLM
 \end{description}
 
+\section{Exemples de Code}
+
+\subsection{Client Python pour l'API DeepSeek}
+
+\begin{lstlisting}[language=Python]
+import requests
+import json
+
+class DeepSeekClient:
+    def __init__(self, api_key):
+        self.api_key = api_key
+        self.base_url = "https://api.deepseek.com/v1"
+        self.headers = {
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json"
+        }
+    
+    def chat_completion(self, messages, model="deepseek-chat", 
+                       temperature=0.7, max_tokens=1000):
+        endpoint = f"{self.base_url}/chat/completions"
+        payload = {
+            "model": model,
+            "messages": messages,
+            "temperature": temperature,
+            "max_tokens": max_tokens
+        }
+        
+        response = requests.post(
+            endpoint, 
+            headers=self.headers, 
+            json=payload
+        )
+        return response.json()
+    
+    def list_models(self):
+        endpoint = f"{self.base_url}/models"
+        response = requests.get(endpoint, headers=self.headers)
+        return response.json()
+
+# Utilisation
+client = DeepSeekClient("your-api-key")
+messages = [
+    {"role": "system", "content": "Assistant technique"},
+    {"role": "user", "content": "Explique l'architecture MoE"}
+]
+result = client.chat_completion(messages)
+print(result['choices'][0]['message']['content'])
+\end{lstlisting}
+
+\subsection{Configuration NGINX pour Gateway}
+
+\begin{lstlisting}[language=bash]
+upstream gateway_backend {
+    least_conn;
+    server gateway1.internal:8080 max_fails=3 fail_timeout=30s;
+    server gateway2.internal:8080 max_fails=3 fail_timeout=30s;
+    server gateway3.internal:8080 max_fails=3 fail_timeout=30s;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name api.deepseek.com;
+    
+    ssl_certificate /etc/ssl/certs/api.crt;
+    ssl_certificate_key /etc/ssl/private/api.key;
+    
+    # Rate limiting
+    limit_req_zone $binary_remote_addr zone=api_limit:10m 
+                   rate=100r/s;
+    limit_req zone=api_limit burst=200 nodelay;
+    
+    location /v1/ {
+        proxy_pass http://gateway_backend;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        
+        # Timeouts
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 60s;
+        
+        # Buffering
+        proxy_buffering off;
+        proxy_request_buffering off;
+    }
+}
+\end{lstlisting}
+
+\subsection{Monitoring avec Prometheus}
+
+\begin{lstlisting}[language=yaml]
+# prometheus.yml
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'gateway'
+    static_configs:
+      - targets: 
+        - 'gateway1:9090'
+        - 'gateway2:9090'
+        - 'gateway3:9090'
+    metrics_path: '/metrics'
+    
+  - job_name: 'inference'
+    static_configs:
+      - targets:
+        - 'inference1:9091'
+        - 'inference2:9091'
+    
+rule_files:
+  - 'alerts.yml'
+
+alerting:
+  alertmanagers:
+    - static_configs:
+      - targets:
+        - 'alertmanager:9093'
+\end{lstlisting}
+
+\newpage
+\section{Diagrammes Supplémentaires}
+
+\subsection{Flux de Traitement d'une Requête}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[node distance=1.5cm, scale=0.85, every node/.style={scale=0.85}]
+    \tikzstyle{process} = [rectangle, draw, fill=blue!20, text width=4cm, text centered, rounded corners, minimum height=0.8cm, font=\small]
+    \tikzstyle{decision} = [diamond, draw, fill=yellow!20, text width=2.5cm, text centered, aspect=2, font=\small]
+    
+    \node (start) [process] {Réception Requête};
+    \node (auth) [process, below of=start] {Authentification};
+    \node (validate) [process, below of=auth] {Validation};
+    \node (ratelimit) [decision, below of=validate, yshift=-0.5cm] {Rate Limit OK?};
+    \node (cache) [decision, below of=ratelimit, yshift=-1cm] {Cache Hit?};
+    \node (queue) [process, below of=cache, yshift=-0.5cm] {Queue Requête};
+    \node (inference) [process, below of=queue] {Inférence};
+    \node (store) [process, below of=inference] {Store in Cache};
+    \node (response) [process, below of=store] {Retour Réponse};
+    \node (error) [process, right of=ratelimit, xshift=3cm] {Erreur 429};
+    \node (cached) [process, right of=cache, xshift=3cm] {Retour Cache};
+    
+    \draw[->] (start) -- (auth);
+    \draw[->] (auth) -- (validate);
+    \draw[->] (validate) -- (ratelimit);
+    \draw[->] (ratelimit) -- node[right] {Oui} (cache);
+    \draw[->] (ratelimit) -- node[above] {Non} (error);
+    \draw[->] (cache) -- node[right] {Non} (queue);
+    \draw[->] (cache) -- node[above] {Oui} (cached);
+    \draw[->] (queue) -- (inference);
+    \draw[->] (inference) -- (store);
+    \draw[->] (store) -- (response);
+    \draw[->] (cached) |- (response);
+    \draw[->] (error) |- (response);
+    
+\end{tikzpicture}
+\caption{Flux Détaillé de Traitement}
+\end{figure}
 
 \end{document}
