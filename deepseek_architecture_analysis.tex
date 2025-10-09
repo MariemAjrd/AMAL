@@ -69,9 +69,10 @@
     tabsize=2
 }
 
+
 % Styles diagrammes TikZ modernes avec ombres
 \tikzstyle{component} = [rectangle, rounded corners=5pt, minimum width=3cm, minimum height=1cm, text centered, draw=primary, line width=1.5pt, fill=primary!10, font=\small\bfseries, blur shadow={shadow blur steps=5}]
-\tikzstyle{database} = [cylinder, shape border rotate=90, minimum width=2.5cm, minimum height=1cm, text centered, draw=success, line width=1.5pt, fill=success!10, font=\small\bfseries, blur shadow={shadow blur steps=5}]
+\tikzstyle{database} = [cylinder, shape border rotate=90, minimum width=1.2cm, minimum height=0.8cm, draw=success, fill=success!10, font=\tiny, inner sep=1pt]
 \tikzstyle{interface} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=warning, line width=1.5pt, fill=warning!10, font=\small\bfseries, blur shadow={shadow blur steps=5}]
 \tikzstyle{cloud} = [ellipse, minimum width=2.5cm, minimum height=1cm, text centered, draw=accent, line width=1.5pt, fill=accent!10, font=\small\bfseries, blur shadow={shadow blur steps=5}]
 \tikzstyle{arrow} = [line width=1.5pt,->,>=stealth,draw=primary]
@@ -124,19 +125,12 @@
 
 % Table des matières moderne
 \newpage
-\begin{tcolorbox}[
-    colback=primary!5,
-    colframe=primary,
-    title={\Large\faTasks\ \ Table des Matières},
-    fonttitle=\bfseries\color{white},
-    coltitle=white,
-    colbacktitle=primary,
-    enhanced,
-    attach boxed title to top left={yshift=-3mm, xshift=5mm},
-    boxed title style={sharp corners}
-]
+
+
+
+
 \tableofcontents
-\end{tcolorbox}
+
 
 \newpage
 
@@ -278,6 +272,11 @@ Business & Tokens générés & count \\
 
 \begin{figure}[h]
 \centering
+
+
+
+
+
 \begin{tikzpicture}[scale=0.9, every node/.style={scale=0.9}]
     
     % Load Balancer Global
@@ -290,7 +289,7 @@ Business & Tokens générés & count \\
     \node[anchor=north, font=\large\bfseries\color{primary}] at (r1.north) {\faMapMarkerAlt\ Région US-Est};
     
     \node[component] (gw1) at (0,3.5) {Gateway Cluster};
-    \node[database] (cache1) at (0,2) {Redis Cache};
+    \node[database] (cache1) at (0,1.8) {Redis Cache};
     \node[interface] (inf1) at (0,0.8) {Inference Pool};
     
     % Région EU-Ouest
@@ -298,7 +297,7 @@ Business & Tokens générés & count \\
     \node[anchor=north, font=\large\bfseries\color{success}] at (r2.north) {\faMapMarkerAlt\ Région EU-Ouest};
     
     \node[component] (gw2) at (12,3.5) {Gateway Cluster};
-    \node[database] (cache2) at (12,2) {Redis Cache};
+    \node[database] (cache2) at (12,1.8) {Redis Cache};
     \node[interface] (inf2) at (12,0.8) {Inference Pool};
     
     % Région Asie-Pacifique
@@ -306,7 +305,7 @@ Business & Tokens générés & count \\
     \node[anchor=north, font=\large\bfseries\color{warning}] at (r3.north) {\faMapMarkerAlt\ Région Asie-Pacifique};
     
     \node[component] (gw3) at (6,-1.5) {Gateway Cluster};
-    \node[database] (cache3) at (6,-3) {Redis Cache};
+    \node[database] (cache3) at (6,-3.2) {Redis Cache};
     \node[interface] (inf3) at (6,-4.2) {Inference Pool};
     
     % Model Storage
@@ -336,6 +335,20 @@ Business & Tokens générés & count \\
     \draw[<->, dashed, line width=1.5pt, draw=success] (r2.south) -- (r3.north east) node[midway, below right, font=\scriptsize, rotate=-30] {Replication};
     
 \end{tikzpicture}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \caption{Architecture de Déploiement Multi-régions}
 \label{fig:multi_region}
 \end{figure}
