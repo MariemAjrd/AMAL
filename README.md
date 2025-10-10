@@ -5,7 +5,7 @@
 This project provides a **comprehensive architectural analysis** of DeepSeek's Gateway system and introduces an **enhanced microservices-based architecture**.  
 The analysis is fully documented in LaTeX and illustrated with UML diagrams.  
 
----
+
 
 ## 📁 Files  
 
@@ -13,7 +13,7 @@ The analysis is fully documented in LaTeX and illustrated with UML diagrams.
 - `deepseek_advanced_analysis.tex` – Advanced analysis with optimality proofs, distributed systems theory, and AI integration
 - `README.md` – This file  
 
----
+
 
 ## 🎯 Objectives  
 
@@ -25,7 +25,7 @@ The analysis is fully documented in LaTeX and illustrated with UML diagrams.
 6. **Design** local optimized architecture with hierarchical caching
 7. **Integrate** AI/ML components for intelligent routing and predictive scaling
 
----
+
 
 ## 🔬 Advanced Analysis Components
 
@@ -81,7 +81,7 @@ Three intelligent modules:
 | Infrastructure Cost | $1.0 | $0.73 | **27%** |
 | SLA Violations | 0.05% | 0.01% | **80%** |
 
----
+
 
 ## 🏗️ Architecture Analysis  
 
@@ -109,7 +109,7 @@ Service Service Service
 - Load balancing across model instances  
 - Database layer (Redis / MongoDB)  
 
----
+
 
 ### Proposed Improved Architecture  
 
@@ -138,7 +138,7 @@ Processing Nodes (Parallel)
 - **Enhanced Fallback Service** – Predictive, resilient recovery mechanisms  
 - **Distributed Data Layer** – High availability and scalability  
 
----
+
 
 ## 🚀 Key Benefits  
 
@@ -162,7 +162,7 @@ Processing Nodes (Parallel)
 | Intelligent (ML) | 241ms | **24.7%** |
 | **Hybrid (Recommended)** | **185ms** | **42.2%** |
 
----
+
 
 ## 🔧 Technical Stack  
 
@@ -181,7 +181,7 @@ Processing Nodes (Parallel)
 - **Messaging:** Apache Kafka  
 - **Databases:** Redis Cluster, MongoDB Cluster, Elasticsearch  
 
----
+
 
 ## 📊 Architecture Patterns  
 
@@ -197,7 +197,7 @@ The enhanced architecture integrates several proven design patterns:
 8. **Predictive Scaling** – LSTM-based load forecasting
 9. **Raft Consensus** – Distributed coordination for gateway clusters
 
----
+
 
 ## 📋 Document Structure  
 
@@ -222,7 +222,7 @@ The enhanced architecture integrates several proven design patterns:
 5. **Implementation Roadmap** – 4-phase deployment strategy
 6. **Performance Metrics** – Comprehensive comparison with expected gains
 
----
+
 
 ## 🎨 UML Diagrams  
 
@@ -231,7 +231,7 @@ The enhanced architecture integrates several proven design patterns:
 - **Deployment Diagrams** – Kubernetes infrastructure  
 - **Monitoring Architecture** – Observability stack  
 
----
+
 
 ## 🔍 Key Findings  
 
@@ -255,7 +255,7 @@ The enhanced architecture integrates several proven design patterns:
 - **Parallel Request Processing**  
 - **Independent Service Deployments**  
 
----
+
 
 ## 🎯 Impact  
 
@@ -293,7 +293,7 @@ By transitioning to the proposed architecture, DeepSeek can:
 - A/B testing strategies
 - Capacity expansion
 
----
+
 
 ## 🔧 Getting Started
 
@@ -314,7 +314,7 @@ Both documents include comprehensive UML diagrams created with TikZ:
 - ML architecture diagrams
 - Monitoring stack visualization
 
----
+
 
 ## 📚 References
 
@@ -324,13 +324,6 @@ Both documents include comprehensive UML diagrams created with TikZ:
 - **Performance Engineering**: Amdahl's Law, Little's Law
 - **Infrastructure**: Kubernetes, Istio, Prometheus, Grafana
 
----
-
-## 📄 License
-
-This project is provided for educational and research purposes.
-
----
 
 ## 👤 Author
 Ajroud Mariem & Ben Omrane Chaima 3IDL2
