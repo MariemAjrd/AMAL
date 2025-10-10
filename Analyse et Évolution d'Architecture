@@ -762,6 +762,7 @@ Intelligente (ML) & 241ms & 24.7\% \\
     \item \textbf{Monitoring continu}: Base pour toute optimisation future
     \item \textbf{Tests de charge réguliers}: Validation empirique des modèles
 \end{enumerate}
+
 \end{tcolorbox}
 
 \end{document}
